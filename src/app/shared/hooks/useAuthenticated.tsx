@@ -7,7 +7,6 @@ const useIsAuthenticated = () => {
   const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
   useEffect(() => {
-    console.log(authStore)
     if (!authStore.isAuthenticated) {
       redirect('/login');
     } else {

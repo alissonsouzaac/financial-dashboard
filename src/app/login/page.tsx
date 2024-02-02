@@ -9,7 +9,6 @@ const Login = () => {
   const router = useRouter();
 
   const handleLogin = () => {
-    console.log('chegou para esse aqui')
     authStore.login();
     router.push('/');
   };

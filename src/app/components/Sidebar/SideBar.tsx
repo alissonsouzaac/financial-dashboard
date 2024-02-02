@@ -3,13 +3,13 @@ import { useRouter } from 'next/navigation'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
 import { LogoutButton, SidebarButton, SidebarContainer } from './styles';
+import authStore from '@/app/store/AuthStore';
 
 const Sidebar = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    console.log('logout')
-    localStorage.removeItem('token');
+    authStore.logout();
     router.push('/login');
   };
 

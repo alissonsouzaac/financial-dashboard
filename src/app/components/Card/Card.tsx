@@ -1,4 +1,3 @@
-// Card.tsx
 import React from 'react';
 import { CardContainer, Title, Value } from './styles';
 import { CardProps } from './types';
