@@ -8,6 +8,8 @@ import Card from '@/app/components/Card/Card';
 import { Filters, Transaction } from './types';
 import { CardsContainer, DashboardContainer, FiltersContainer, FiltersDate, LabelDate } from './styles';
 import useIsAuthenticated from '@/app/shared/hooks/useAuthenticated';
+import { IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 Chart.register(
   CategoryScale,
@@ -64,20 +66,47 @@ const Dashboard: React.FC = () => {
     return acc;
   }, { depositCount: 0, depositTotal: 0, withdrawCount: 0, withdrawTotal: 0 });
 
+  const clearFilters = () => {
+    setFilters({
+      startDate: null,
+      endDate: null,
+      selectedAccount: null,
+      selectedIndustry: null,
+      selectedState: null,
+    });
+  };
 
+  const isValidDate = (value: string) => {
+    const date = new Date(value);
+    return !isNaN(date.getTime());
+  };
+
+  const handleStartDateChange = (value: string) => {
+    setFilters({
+      ...filters,
+      startDate: isValidDate(value) ? new Date(value) : null,
+    });
+  };
+
+  const handleEndDateChange = (value: string) => {
+    setFilters({
+      ...filters,
+      endDate: isValidDate(value) ? new Date(value) : null,
+    });
+  };
 
   const chartData = {
     labels: ['Finances'],
     datasets: [
       {
-        label: 'Receitas',
+        label: 'Revenues',
         data: [groupedTransactions.depositCount],
         backgroundColor: ['forestgreen'], // 'Deposit' é 'forestgreen'
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       },
       {
-        label: 'Despesas',
+        label: 'Expenses',
         data: [groupedTransactions.withdrawCount],
         backgroundColor: ['orangered'], // 'Withdraw' é 'orangered'
         borderColor: 'rgba(255, 99, 132, 1)',
@@ -95,7 +124,6 @@ const Dashboard: React.FC = () => {
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
       },
     },
   };
@@ -108,15 +136,26 @@ const Dashboard: React.FC = () => {
       <FiltersContainer>
         <FiltersDate>
           <LabelDate>Start Date</LabelDate>
-          <FilterField value={filters.startDate ? filters.startDate.toISOString().split('T')[0] : ''} onChange={(value) => setFilters({ ...filters, startDate: new Date(value) })} type="date" />
-        </FiltersDate>
-        <FiltersDate>
-          <LabelDate>End Date</LabelDate>
-          <FilterField value={filters.endDate ? filters.endDate.toISOString().split('T')[0] : ''} onChange={(value) => setFilters({ ...filters, endDate: new Date(value) })} type="date" />
+            <FilterField
+              value={filters.startDate ? filters.startDate.toISOString().split('T')[0] : ''}
+              onChange={handleStartDateChange}
+              type="date"
+            />
+          </FiltersDate>
+          <FiltersDate>
+            <LabelDate>End Date</LabelDate>
+            <FilterField
+              value={filters.endDate ? filters.endDate.toISOString().split('T')[0] : ''}
+              onChange={handleEndDateChange}
+              type="date"
+            />
         </FiltersDate>
         <FilterField label="Account" value={filters.selectedAccount} onChange={(value) => setFilters({ ...filters, selectedAccount: value })} />
         <FilterField label="Industry" value={filters.selectedIndustry} onChange={(value) => setFilters({ ...filters, selectedIndustry: value })} />
         <FilterField label="State" value={filters.selectedState} onChange={(value) => setFilters({ ...filters, selectedState: value })} />
+        <IconButton onClick={clearFilters} color="default" aria-label="Clear Filters">
+            <ClearIcon />
+        </IconButton>
       </FiltersContainer>
       <CardsContainer>
         <Card title="Revenue" value={groupedTransactions.depositTotal} />
