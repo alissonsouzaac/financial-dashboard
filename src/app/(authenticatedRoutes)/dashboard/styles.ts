@@ -17,6 +17,16 @@ export const FiltersContainer = styled.div`
   }
 `;
 
+export const FiltersDate = styled.div`
+  top: -12px; 
+  position: relative;
+`;
+
+export const LabelDate = styled.h6`
+  position: relative;
+  right: 50px
+`;
+
 export const CardsContainer = styled.div`
   display: flex;
   gap: 5px;

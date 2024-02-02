@@ -1,18 +1,19 @@
-import AuthStore from '@/app/store/AuthStore';
+import authStore from '@/app/store/AuthStore';
 import { redirect } from 'next/navigation';
 import react, { useEffect, useState } from 'react';
 
 const useIsAuthenticated = () => {
-  const authStoreInstance = new AuthStore();
+  
   const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
   useEffect(() => {
-    if (!authStoreInstance.isAuthenticated) {
+    console.log(authStore)
+    if (!authStore.isAuthenticated) {
       redirect('/login');
     } else {
       setIsAuthCheckComplete(true);
     }
-  }, [authStoreInstance.isAuthenticated]);
+  }, [authStore.isAuthenticated]);
 
   return { isAuthCheckComplete };
 };

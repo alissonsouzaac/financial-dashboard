@@ -8,6 +8,7 @@ const Sidebar = () => {
   const router = useRouter();
 
   const handleLogout = () => {
+    console.log('logout')
     localStorage.removeItem('token');
     router.push('/login');
   };

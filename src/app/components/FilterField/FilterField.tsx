@@ -7,7 +7,7 @@ import { FilterFieldProps } from './types';
 const FilterField: React.FC<FilterFieldProps> = ({ label, value, onChange, type = 'text' }) => {
   return (
     <TextField
-      id={`outlined-basic-${label.toLowerCase()}`}
+      id={`outlined-basic-${label?.toLowerCase()}`}
       label={label}
       variant="outlined"
       size="small"

@@ -1,6 +1,6 @@
 import { observable, action, makeObservable } from 'mobx';
 
-class AuthStore {
+class useAuthStore {
   isAuthenticated: boolean = false;
 
   constructor() {
@@ -12,6 +12,7 @@ class AuthStore {
   }
 
   login = () => {
+    console.log('chamei e ficou true')
     this.isAuthenticated = true;
   };
 
@@ -20,4 +21,5 @@ class AuthStore {
   };
 }
 
-export default AuthStore;
+const authStore = new useAuthStore();
+export default authStore;

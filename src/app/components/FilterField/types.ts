@@ -1,5 +1,5 @@
 export interface FilterFieldProps {
-    label: string;
+    label?: string;
     value: string | null;
     onChange: (value: string) => void;
     type?: string;

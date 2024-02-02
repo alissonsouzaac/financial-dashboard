@@ -1,13 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import transactionsData from '@/app/utils/transactions.json';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement } from 'chart.js';
 import FilterField from '@/app/components/FilterField/FilterField';
 import Card from '@/app/components/Card/Card';
 import { Filters, Transaction } from './types';
-import { CardsContainer, DashboardContainer, FiltersContainer } from './styles';
+import { CardsContainer, DashboardContainer, FiltersContainer, FiltersDate, LabelDate } from './styles';
+import useIsAuthenticated from '@/app/shared/hooks/useAuthenticated';
 
 Chart.register(
   CategoryScale,
@@ -29,6 +29,8 @@ const Dashboard: React.FC = () => {
     selectedIndustry: null as null | string,
     selectedState: null as null | string,
   });
+
+  useIsAuthenticated();
 
   useEffect(() => {
     const mockTransactions = transactionsData as Transaction[]
@@ -104,8 +106,14 @@ const Dashboard: React.FC = () => {
     <DashboardContainer>
       <h1>Dashboard</h1>
       <FiltersContainer>
-        <FilterField label="Start Date" value={filters.startDate ? filters.startDate.toISOString().split('T')[0] : ''} onChange={(value) => setFilters({ ...filters, startDate: new Date(value) })} type="date" />
-        <FilterField label="End Date" value={filters.endDate ? filters.endDate.toISOString().split('T')[0] : ''} onChange={(value) => setFilters({ ...filters, endDate: new Date(value) })} type="date" />
+        <FiltersDate>
+          <LabelDate>Start Date</LabelDate>
+          <FilterField value={filters.startDate ? filters.startDate.toISOString().split('T')[0] : ''} onChange={(value) => setFilters({ ...filters, startDate: new Date(value) })} type="date" />
+        </FiltersDate>
+        <FiltersDate>
+          <LabelDate>End Date</LabelDate>
+          <FilterField value={filters.endDate ? filters.endDate.toISOString().split('T')[0] : ''} onChange={(value) => setFilters({ ...filters, endDate: new Date(value) })} type="date" />
+        </FiltersDate>
         <FilterField label="Account" value={filters.selectedAccount} onChange={(value) => setFilters({ ...filters, selectedAccount: value })} />
         <FilterField label="Industry" value={filters.selectedIndustry} onChange={(value) => setFilters({ ...filters, selectedIndustry: value })} />
         <FilterField label="State" value={filters.selectedState} onChange={(value) => setFilters({ ...filters, selectedState: value })} />
