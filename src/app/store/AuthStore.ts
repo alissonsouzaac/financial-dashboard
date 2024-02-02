@@ -12,7 +12,6 @@ class useAuthStore {
   }
 
   login = () => {
-    console.log('chamei e ficou true')
     this.isAuthenticated = true;
   };
 

@@ -3,7 +3,6 @@ import useIsAuthenticated from '../shared/hooks/useAuthenticated';
 import { WelcomeContainer, WelcomeSubtitle, WelcomeTitle } from './styled';
 
 export default function Home() {
-
   useIsAuthenticated();
   
   return (
